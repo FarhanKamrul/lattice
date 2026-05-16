@@ -1,0 +1,288 @@
+{
+  "jurisdictionCode": "BR",
+  "jurisdictionName": "Brazil",
+  "systemOwner": "Banco Central do Brasil (BCB) / COAF / Ministry of Finance",
+  "version": "1.0",
+  "effectiveDate": "2025-09-30",
+  "lastUpdated": "2026-05-16",
+  "governingInstruments": [
+    {
+      "id": "BCB_RES_506_2025",
+      "shortName": "BCB Resolution 506/2025",
+      "fullName": "Banco Central do Brasil Resolution No. 506 — Pix Security and Fraud Prevention Measures",
+      "effectiveDate": "2025-09-30",
+      "scope": "Pix fraud notifications, precautionary blocking, DICT fraud marks, transaction restrictions for flagged accounts",
+      "keyProvision": "Pix participants must create and accept fraud notifications. Institutions must block all transactions (except refunds) for accounts associated with transactional fraud notifications. Applies to CPF/CNPJ flagged for Pix fraud. Extended to legal entities from October 2025.",
+      "url": "https://digitalpolicyalert.org/event/34071"
+    },
+    {
+      "id": "BCB_RES_493_2025",
+      "shortName": "BCB Resolution 493/2025 — MED 2.0",
+      "fullName": "Banco Central do Brasil Resolution No. 493 — Special Return Mechanism (MED) 2.0",
+      "effectiveDate": "2026-02-02",
+      "scope": "Mandatory multi-hop fund tracing and blocking for Pix fraud — tracks proceeds across up to 5 intermediary accounts",
+      "keyProvision": "Immediate blocking of funds upon fraud notification. Payer's PSP must debit and execute return on its own behalf. Tracks and blocks across chain of intermediary accounts. Mandatory from February 2, 2026; enforcement grace period ended May 10, 2026.",
+      "url": "https://www.demarest.com.br/en/banco-central-publica-resolucao-que-aperfeicoa-procedimentos-do-pix-resolucao-bcb-no-493/"
+    },
+    {
+      "id": "BCB_RES_546_2026",
+      "shortName": "BCB Resolution 546/2026",
+      "fullName": "Banco Central do Brasil Resolution No. 546 — MED 2.0 Enforcement Transition",
+      "effectiveDate": "2026-01-22",
+      "scope": "Grace period for MED 2.0 compliance February 2 - May 10, 2026; full enforcement from May 11, 2026",
+      "keyProvision": "Institutions failing to implement MED 2.0 multi-hop tracing system after May 10, 2026 face formal supervisory penalty proceedings under Article 121 of the Pix Regulation.",
+      "url": "https://clearingpost.com/insights/bcb-med-2-grace-period-ends-pix-enforcement-may-2026/"
+    },
+    {
+      "id": "BCB_NORM_491_2024",
+      "shortName": "BCB Normative 491/2024",
+      "fullName": "Banco Central do Brasil Normative Instruction No. 491 — Device Risk Controls for Pix",
+      "effectiveDate": "2024-11-01",
+      "scope": "First-use and unregistered device transaction limits for Pix",
+      "keyProvision": "Unregistered devices: max R$200 per transaction, R$1,000 daily limit. Device risk tier signals trigger mandatory limit application.",
+      "url": "https://www.feedzai.com/blog/bcb-normative-no-491-how-brazil-can-strengthen-pix-fraud-prevention/"
+    },
+    {
+      "id": "COAF_RES_36_2021",
+      "shortName": "COAF Resolution 36/2021",
+      "fullName": "Conselho de Controle de Atividades Financeiras Resolution No. 36/2021 — AML/CFT Policy",
+      "effectiveDate": "2021-06-01",
+      "scope": "AML/CFT governance, SAR filing obligations for COAF-supervised entities",
+      "keyProvision": "Suspicious transactions must be reported to COAF within 24 hours of identifying suspicion. Cash transactions ≥ BRL 10,000 mandatory reporting. Cross-border transactions ≥ BRL 100,000 mandatory reporting. AML/CFT documentation retained 5 years.",
+      "url": "https://www.mayerbrown.com/en/insights/publications/2021/04/new-coaf-antimoney-laundering-and-terrorism-financing-resolution-no3"
+    },
+    {
+      "id": "LGPD_2018",
+      "shortName": "LGPD Art. 12",
+      "fullName": "Lei Geral de Proteção de Dados (Federal Law 13.709/2018), Article 12 — Anonymisation Standard",
+      "effectiveDate": "2020-09-18",
+      "scope": "Data protection — anonymisation threshold and pseudonymisation obligations",
+      "keyProvision": "Data is only anonymous if re-identification is impossible using technical means available at the time. Pseudonymised data remains personal data. Fraud prevention is a legitimate basis under Art. 7(III) — compliance with legal obligation.",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm"
+    },
+    {
+      "id": "ANPD_RES_19_2024",
+      "shortName": "ANPD Resolution 19/2024",
+      "fullName": "Autoridade Nacional de Proteção de Dados Resolution No. 19/2024 — International Data Transfer Standard Contractual Clauses",
+      "effectiveDate": "2024-08-23",
+      "scope": "Standard contractual clauses for cross-border personal data transfers from Brazil",
+      "keyProvision": "Cross-border transfers of personal data (including pseudonymised data) from Brazil require ANPD SCCs unless destination country has adequacy decision from ANPD. No adequacy decision yet issued for UK or US.",
+      "url": "https://www.gov.br/anpd/pt-br"
+    },
+    {
+      "id": "AML_LAW_9613_1998",
+      "shortName": "AML Law 9.613/1998",
+      "fullName": "Federal Law No. 9.613/1998 — Anti-Money Laundering Law (as amended)",
+      "effectiveDate": "1998-03-03",
+      "scope": "Primary AML/CFT framework; COAF establishment and powers",
+      "keyProvision": "Financial institutions must report suspicious transactions to COAF. COAF forwards intelligence to law enforcement. Confidentiality obligation on reporters — equivalent to tipping-off prohibition."
+    }
+  ],
+  "criticalLegalGap": {
+    "description": "BCB MED mechanism is strictly domestic-PIX-only. Foreign-origin fraud intelligence signals have NO direct legal pathway into MED or DICT blocking. Foreign signals must route via COAF's Egmont channel or a bilateral agreement. This creates a structural gap where even a Tier 2 signal with valid token-based account references cannot trigger immediate blocking at the case level.",
+    "affectedActions": ["block_account", "freeze_account", "med_trigger"],
+    "resolutionPath": "COAF Egmont channel (FIU-to-FIU) or bilateral MOU between source FIU and BCB/COAF",
+    "instruments": ["COAF_RES_36_2021", "BCB_RES_506_2025"],
+    "legalAuthority": "AML_LAW_9613_1998 Art. 15 — COAF international cooperation"
+  },
+  "fieldSurvivalRules": {
+    "tier1": {
+      "identifierFields": ["accountNumber", "pixKey", "ipAddress", "deviceFingerprint", "phoneNumber"],
+      "bandsAndCategories": ["transactionAmountBand", "paymentRail", "fraudTypologyCode", "geographicRiskBand", "deviceRiskTier", "pixKeyTypeCategory"],
+      "timestamps": ["transactionUTC", "detectionUTC"],
+      "narrative": "filtered"
+    },
+    "tier2": {
+      "identifierFields": ["accountNumber", "pixKey", "ipAddress", "deviceFingerprint", "phoneNumber"],
+      "bandsAndCategories": ["transactionAmountBand", "paymentRail", "fraudTypologyCode", "geographicRiskBand", "pixKeyTypeCategory"],
+      "timestamps": ["transactionUTC", "detectionUTC"],
+      "narrative": "first_sentence_only",
+      "note": "identifierFields as random tokens only"
+    },
+    "tier3": {
+      "identifierFields": [],
+      "bandsAndCategories": ["transactionAmountBand", "paymentRail", "fraudTypologyCode", "geographicRiskBand"],
+      "timestamps": ["transactionUTC"],
+      "narrative": null
+    }
+  },
+  "useMatrix": {
+    "APP_FRAUD": {
+      "med_trigger": {
+        "actionCategory": "case_level",
+        "requiredFields": ["accountNumber", "pixKey"],
+        "legalBasis": {
+          "instrument": "BCB_RES_493_2025",
+          "provision": "MED 2.0 — immediate blocking upon fraud notification across up to 5 intermediary accounts",
+          "permitted": "conditional",
+          "condition": "DOMESTIC PIX ONLY. Foreign-origin signals have no direct MED pathway. Signal must enter via COAF Egmont channel and be re-originated by a Brazilian institution to trigger MED.",
+          "foreignOriginPermitted": false,
+          "foreignOriginWorkaround": "COAF Egmont channel re-origination or bilateral BCB-FIU agreement"
+        },
+        "minimumTier": 1,
+        "effectiveMinimumTier_foreignOrigin": null
+      },
+      "block_account": {
+        "actionCategory": "case_level",
+        "requiredFields": ["accountNumber"],
+        "legalBasis": {
+          "instrument": "BCB_RES_506_2025",
+          "provision": "Institutions must block all transactions (except refunds) for accounts with transactional fraud notifications",
+          "permitted": "conditional",
+          "condition": "BCB Resolution 506 notification must be originated by a Pix participant (Brazilian institution). Foreign-origin signal cannot directly trigger block — must be re-originated by Brazilian receiving institution after independent assessment.",
+          "foreignOriginPermitted": false,
+          "foreignOriginWorkaround": "Brazilian FI receives signal, forms independent suspicion, files domestic BCB-506 notification"
+        },
+        "minimumTier": 2,
+        "effectiveMinimumTier_foreignOrigin": 2,
+        "note": "Token acceptable if receiving Brazilian FI can vault-match to domestic account"
+      },
+      "dict_fraud_mark": {
+        "actionCategory": "case_level",
+        "requiredFields": ["pixKey", "pixKeyTypeCategory"],
+        "legalBasis": {
+          "instrument": "BCB_RES_506_2025",
+          "provision": "Institutions must reject Pix key registrations for accounts associated with fraud notifications",
+          "permitted": "conditional",
+          "condition": "DICT marking requires domestic Brazilian institution to originate the notification. Foreign signal can inform but cannot directly write to DICT.",
+          "foreignOriginPermitted": false
+        },
+        "minimumTier": 1,
+        "effectiveMinimumTier_foreignOrigin": null
+      },
+      "device_limit_trigger": {
+        "actionCategory": "case_level",
+        "requiredFields": ["deviceFingerprint", "deviceRiskTier"],
+        "legalBasis": {
+          "instrument": "BCB_NORM_491_2024",
+          "provision": "Unregistered devices face R$200 per transaction / R$1,000 daily limit",
+          "permitted": true,
+          "condition": "Device risk tier must be UNREGISTERED or FIRST_USE in signal. Brazilian institution applies limit independently.",
+          "foreignOriginPermitted": true,
+          "note": "This is one of the few case-level actions that can be triggered by foreign-origin signal directly"
+        },
+        "minimumTier": 2
+      },
+      "file_SAR_to_COAF": {
+        "actionCategory": "case_level",
+        "requiredFields": ["accountNumber", "transactionAmountBand"],
+        "legalBasis": {
+          "instrument": "COAF_RES_36_2021 + AML_LAW_9613_1998",
+          "provision": "Mandatory reporting within 24 hours of identifying suspicion. Receiving Brazilian institution must independently assess signal and form own suspicion.",
+          "permitted": true,
+          "condition": "Brazilian institution must form independent suspicion — platform signal is a trigger, not a substitute. 24-hour clock starts from institution's independent assessment, not signal receipt.",
+          "foreignOriginPermitted": true
+        },
+        "minimumTier": 2
+      },
+      "act_on_foreign_intelligence": {
+        "actionCategory": "case_level",
+        "requiredFields": ["accountNumber"],
+        "legalBasis": {
+          "instrument": "AML_LAW_9613_1998 Art.15 + COAF Egmont",
+          "provision": "COAF may share and receive intelligence via Egmont Secure Web. No direct legal pathway for private institution to act on foreign intelligence without COAF intermediation.",
+          "permitted": "conditional",
+          "condition": "Must flow via COAF Egmont channel. Private institution direct receipt and action not legally established for foreign-origin signals.",
+          "foreignOriginPermitted": "via_COAF_only"
+        },
+        "minimumTier": 2
+      },
+      "typology_alert": {
+        "actionCategory": "systemic",
+        "requiredFields": ["fraudTypologyCode", "paymentRail"],
+        "legalBasis": {
+          "instrument": "COAF_RES_36_2021",
+          "provision": "COAF ANR (National Risk Assessment) relies on typology intelligence for sector-wide alerts",
+          "permitted": true,
+          "condition": null,
+          "foreignOriginPermitted": true
+        },
+        "minimumTier": 3
+      },
+      "update_fraud_model": {
+        "actionCategory": "systemic",
+        "requiredFields": ["fraudTypologyCode", "geographicRiskBand", "paymentRail"],
+        "legalBasis": {
+          "instrument": "BCB_RES_506_2025 + LGPD_2018",
+          "provision": "BCB requires institutions to adopt minimum fraud assessment criteria. Anonymous aggregate data not subject to LGPD restrictions.",
+          "permitted": true,
+          "condition": null,
+          "foreignOriginPermitted": true
+        },
+        "minimumTier": 3
+      },
+      "pix_risk_recalibration": {
+        "actionCategory": "systemic",
+        "requiredFields": ["geographicRiskBand", "fraudTypologyCode", "paymentRail"],
+        "legalBasis": {
+          "instrument": "BCB_RES_506_2025",
+          "provision": "BCB mandates minimum criteria for assessing suspected fraud in Pix transactions. Risk model updates permitted on anonymous typology data.",
+          "permitted": true,
+          "condition": "paymentRail must include PIX for Pix-specific recalibration",
+          "foreignOriginPermitted": true
+        },
+        "minimumTier": 3
+      },
+      "regulatory_reporting": {
+        "actionCategory": "systemic",
+        "requiredFields": ["fraudTypologyCode", "transactionAmountBand"],
+        "legalBasis": {
+          "instrument": "COAF_RES_36_2021 + BCB_RES_506_2025",
+          "provision": "BCB and COAF periodic reporting. Anonymous aggregate data contributes to ANR and BCB Annual Financial Stability Report.",
+          "permitted": true,
+          "condition": null,
+          "foreignOriginPermitted": true
+        },
+        "minimumTier": 3
+      }
+    },
+    "UNAUTHORISED_TRANSACTION": {
+      "med_trigger": {
+        "actionCategory": "case_level",
+        "requiredFields": ["accountNumber", "pixKey"],
+        "legalBasis": {
+          "instrument": "BCB_RES_493_2025",
+          "provision": "MED 2.0 mandatory for Pix unauthorised transactions",
+          "permitted": "conditional",
+          "condition": "Domestic Pix only. Foreign-origin signal cannot directly trigger.",
+          "foreignOriginPermitted": false
+        },
+        "minimumTier": 1,
+        "effectiveMinimumTier_foreignOrigin": null
+      },
+      "file_SAR_to_COAF": {
+        "actionCategory": "case_level",
+        "requiredFields": ["accountNumber", "transactionAmountBand"],
+        "legalBasis": {
+          "instrument": "COAF_RES_36_2021",
+          "provision": "Mandatory 24-hour reporting on suspicion",
+          "permitted": true,
+          "condition": "Independent assessment required",
+          "foreignOriginPermitted": true
+        },
+        "minimumTier": 2
+      },
+      "typology_alert": {
+        "actionCategory": "systemic",
+        "requiredFields": ["fraudTypologyCode", "paymentRail"],
+        "legalBasis": {
+          "instrument": "COAF_RES_36_2021",
+          "permitted": true,
+          "foreignOriginPermitted": true
+        },
+        "minimumTier": 3
+      }
+    }
+  },
+  "conflictTypeDefinitions": {
+    "FIELD_CLASSIFICATION": "Field is direct or indirect identifier under LGPD — must be suppressed or tokenised",
+    "TIPPING_OFF": "Narrative contains SAR/investigation reference — equivalent prohibition under AML Law 9.613/1998",
+    "K_ANONYMITY_FAILURE": "Surviving fields do not meet k-threshold under LGPD Art.12 re-identification standard",
+    "TRANSFER_INSTRUMENT_GAP": "Cross-border transfer from Brazil requires ANPD SCC — no adequacy decision for UK or US",
+    "MED_DOMESTIC_ONLY": "MED/DICT mechanism legally restricted to domestic Pix participants — foreign-origin signal cannot directly trigger",
+    "FOREIGN_INTELLIGENCE_GATEWAY": "Foreign-origin case-level action requires COAF Egmont channel intermediation — direct private institution action not legally established",
+    "RETENTION_CONFLICT": "LGPD right to erasure vs. AML Law 5-year minimum retention — erasure requests may conflict with AML obligations"
+  },
+  "defaultTier": 2,
+  "tierSelectionLogic": "Default Tier 2 for cross-border signals. For case-level actions involving MED/DICT: effective tier is null for foreign-origin signals regardless of tier — must route via COAF. Systemic actions available at Tier 3 without transfer instrument if data is genuinely anonymous under LGPD Art.12."
+}

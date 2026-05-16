@@ -1,0 +1,282 @@
+{
+  "jurisdictionCode": "UK",
+  "jurisdictionName": "United Kingdom",
+  "systemOwner": "HM Treasury / FCA / PSR / NCA-UKFIU",
+  "version": "1.0",
+  "effectiveDate": "2024-10-07",
+  "lastUpdated": "2026-05-16",
+  "governingInstruments": [
+    {
+      "id": "ECCTA_2023_S188_189",
+      "shortName": "ECCTA 2023 ss.188-189",
+      "fullName": "Economic Crime and Corporate Transparency Act 2023, Sections 188-189",
+      "effectiveDate": "2024-01-15",
+      "scope": "Indirect and direct information sharing between AML-regulated firms via third-party intermediary",
+      "keyProvision": "Warning condition: sharing firm must have decided (or would have decided) to take safeguarding action against the customer. Protects against confidentiality breach and civil liability.",
+      "url": "https://www.legislation.gov.uk/ukpga/2023/56/section/189"
+    },
+    {
+      "id": "POCA_2002_S330",
+      "shortName": "POCA 2002 s.330",
+      "fullName": "Proceeds of Crime Act 2002, Section 330 - Failure to Disclose (Regulated Sector)",
+      "effectiveDate": "2002-12-24",
+      "scope": "Mandatory SAR filing obligation for regulated sector firms",
+      "keyProvision": "Firm must file SAR to UKFIU/NCA as soon as practicable upon knowledge or suspicion of money laundering. No financial threshold exemption for s.330 duty.",
+      "url": "https://www.legislation.gov.uk/ukpga/2002/29/section/330"
+    },
+    {
+      "id": "POCA_2002_S333A",
+      "shortName": "POCA 2002 s.333A",
+      "fullName": "Proceeds of Crime Act 2002, Section 333A - Tipping Off",
+      "effectiveDate": "2002-12-24",
+      "scope": "Prohibition on disclosing SAR existence or content to subject or third parties",
+      "keyProvision": "Offence to disclose that SAR has been made or that investigation is underway if likely to prejudice investigation.",
+      "url": "https://www.legislation.gov.uk/ukpga/2002/29/section/333A"
+    },
+    {
+      "id": "PSR_SD20_2024",
+      "shortName": "PSR Specific Direction 20 (July 2024)",
+      "fullName": "Payment Systems Regulator Specific Direction 20 - FPS APP Scam Reimbursement Requirement",
+      "effectiveDate": "2024-10-07",
+      "scope": "Mandatory APP fraud reimbursement for all PSPs on FPS and CHAPS",
+      "keyProvision": "All PSPs sending or receiving FPS/CHAPS payments must reimburse APP scam victims. Sending and receiving firms split costs 50:50. Maximum reimbursement £85,000.",
+      "url": "https://www.psr.org.uk/media/rqrpnb0w/amended-specific-direction-20-july-2024.pdf"
+    },
+    {
+      "id": "PSA_AMENDMENT_2024",
+      "shortName": "Payment Services (Amendment) Regulations 2024",
+      "fullName": "The Payment Services (Amendment) Regulations 2024 - Payment Delay Legislation",
+      "effectiveDate": "2024-10-07",
+      "scope": "Allows PSPs to delay outbound payments up to 4 business days on reasonable fraud suspicion",
+      "keyProvision": "PSP may delay crediting transaction to payee's PSP where reasonable grounds exist to suspect fraud. Risk-based approach; must minimise impact on legitimate payments.",
+      "url": "https://www.legislation.gov.uk/ukia/2024/145"
+    },
+    {
+      "id": "PSR_2017",
+      "shortName": "PSR 2017",
+      "fullName": "Payment Services Regulations 2017",
+      "effectiveDate": "2018-01-13",
+      "scope": "Transpose PSD2 into UK law; governs PSP obligations including fraud response",
+      "keyProvision": "PSPs must have robust fraud controls. Receiving PSP liability for unauthorised transactions under specific conditions.",
+      "url": "https://www.legislation.gov.uk/uksi/2017/752/contents"
+    },
+    {
+      "id": "FCA_SCA_TS_2026",
+      "shortName": "FCA 2025/62 SCA Technical Standards",
+      "fullName": "Technical Standards (Strong Customer Authentication and Common and Secure Methods of Communication) (Amendment) Instrument 2025",
+      "effectiveDate": "2026-03-19",
+      "scope": "Step-up authentication requirements for payment service providers",
+      "keyProvision": "PSPs must revert to SCA where payment cannot be qualified as low risk. Fraud signals from intelligence platform constitute grounds for step-up trigger.",
+      "url": "https://api-handbook.fca.org.uk/files/instrument/TECHNICAL%20STANDARD/FCA%202025/62-2026-03-19.pdf"
+    },
+    {
+      "id": "UK_GDPR_ART25",
+      "shortName": "UK GDPR Art. 25",
+      "fullName": "UK General Data Protection Regulation, Article 25 - Data Protection by Design and by Default",
+      "effectiveDate": "2021-01-01",
+      "scope": "Pseudonymisation and data minimisation obligations for all personal data processing",
+      "keyProvision": "Controllers must implement appropriate technical measures including pseudonymisation. Processing for fraud prevention is a legitimate interest basis under Art. 6(1)(f)."
+    },
+    {
+      "id": "NCA_SAR_REGIME",
+      "shortName": "NCA/UKFIU SAR Regime",
+      "fullName": "National Crime Agency UK Financial Intelligence Unit - Suspicious Activity Reports Regime",
+      "effectiveDate": "2006-01-01",
+      "scope": "Centralised receipt and analysis of all UK SARs",
+      "keyProvision": "UKFIU has sole national responsibility for receiving, analysing, and disseminating SARs. Failure to file is a criminal offence under POCA ss.330-331."
+    }
+  ],
+  "fieldSurvivalRules": {
+    "tier1": {
+      "identifierFields": ["accountNumber", "sortCode", "ipAddress", "deviceFingerprint", "phoneNumber", "iban", "bic"],
+      "bandsAndCategories": ["transactionAmountBand", "paymentRail", "fraudTypologyCode", "geographicRiskBand", "deviceRiskTier"],
+      "timestamps": ["transactionUTC", "detectionUTC"],
+      "narrative": "filtered"
+    },
+    "tier2": {
+      "identifierFields": ["accountNumber", "sortCode", "ipAddress", "deviceFingerprint", "phoneNumber", "iban", "bic"],
+      "bandsAndCategories": ["transactionAmountBand", "paymentRail", "fraudTypologyCode", "geographicRiskBand"],
+      "timestamps": ["transactionUTC", "detectionUTC"],
+      "narrative": "first_sentence_only",
+      "note": "identifierFields present as random tokens only — not HMAC hashes"
+    },
+    "tier3": {
+      "identifierFields": [],
+      "bandsAndCategories": ["transactionAmountBand", "paymentRail", "fraudTypologyCode", "geographicRiskBand"],
+      "timestamps": ["transactionUTC"],
+      "narrative": null
+    }
+  },
+  "useMatrix": {
+    "APP_FRAUD": {
+      "delay_payment": {
+        "actionCategory": "case_level",
+        "requiredFields": ["accountNumber"],
+        "legalBasis": {
+          "instrument": "PSA_AMENDMENT_2024",
+          "provision": "Reasonable grounds to suspect fraud — up to 4 business day delay",
+          "permitted": true,
+          "condition": null
+        },
+        "minimumTier": 2,
+        "note": "Token-based account reference sufficient if receiving FI can vault-match"
+      },
+      "block_account": {
+        "actionCategory": "case_level",
+        "requiredFields": ["accountNumber"],
+        "legalBasis": {
+          "instrument": "PSR_SD20_2024 + ECCTA_2023_S188_189",
+          "provision": "PSPs must take safeguarding action; ECCTA warning condition confirms action taken",
+          "permitted": true,
+          "condition": null
+        },
+        "minimumTier": 2,
+        "note": "Token acceptable if receiving FI has vault registration"
+      },
+      "freeze_account": {
+        "actionCategory": "case_level",
+        "requiredFields": ["accountNumber"],
+        "legalBasis": {
+          "instrument": "PSR_SD20_2024",
+          "provision": "Receiving PSP must cooperate in fraud prevention under SD20 50:50 cost-sharing",
+          "permitted": true,
+          "condition": null
+        },
+        "minimumTier": 2
+      },
+      "file_SAR": {
+        "actionCategory": "case_level",
+        "requiredFields": ["accountNumber", "transactionAmountBand"],
+        "legalBasis": {
+          "instrument": "POCA_2002_S330",
+          "provision": "Mandatory upon knowledge or suspicion — no financial threshold for s.330 duty",
+          "permitted": true,
+          "condition": "Receiving firm must form independent suspicion. Platform signal is a trigger, not a substitute for independent assessment."
+        },
+        "minimumTier": 2
+      },
+      "step_up_auth": {
+        "actionCategory": "case_level",
+        "requiredFields": ["deviceFingerprint", "ipAddress"],
+        "legalBasis": {
+          "instrument": "FCA_SCA_TS_2026",
+          "provision": "PSP must revert to SCA where payment cannot be qualified as low risk",
+          "permitted": true,
+          "condition": null
+        },
+        "minimumTier": 2
+      },
+      "reimburse_victim": {
+        "actionCategory": "case_level",
+        "requiredFields": ["accountNumber", "transactionAmountBand", "paymentRail"],
+        "legalBasis": {
+          "instrument": "PSR_SD20_2024",
+          "provision": "Mandatory reimbursement within 5 business days. Max £85,000. Sending/receiving PSP split 50:50.",
+          "permitted": true,
+          "condition": "paymentRail must be FPS or CHAPS"
+        },
+        "minimumTier": 2
+      },
+      "act_on_foreign_intelligence": {
+        "actionCategory": "case_level",
+        "requiredFields": ["accountNumber"],
+        "legalBasis": {
+          "instrument": "ECCTA_2023_S188_189",
+          "provision": "ECCTA safe harbour covers indirect sharing via third-party intermediary under warning condition",
+          "permitted": true,
+          "condition": "Warning condition must be confirmed true in signal envelope. AML-regulated firms only."
+        },
+        "minimumTier": 2
+      },
+      "typology_alert": {
+        "actionCategory": "systemic",
+        "requiredFields": ["fraudTypologyCode", "paymentRail"],
+        "legalBasis": {
+          "instrument": "ECCTA_2023_S188_189 + NCA_SAR_REGIME",
+          "provision": "Intelligence sharing for prevention and detection of economic crime",
+          "permitted": true,
+          "condition": null
+        },
+        "minimumTier": 3
+      },
+      "update_fraud_model": {
+        "actionCategory": "systemic",
+        "requiredFields": ["fraudTypologyCode", "geographicRiskBand"],
+        "legalBasis": {
+          "instrument": "PSR_SD20_2024 + UK_GDPR_ART25",
+          "provision": "PSPs obliged to improve anti-fraud systems. Aggregated anonymous data not subject to GDPR restrictions.",
+          "permitted": true,
+          "condition": null
+        },
+        "minimumTier": 3
+      },
+      "raise_risk_threshold": {
+        "actionCategory": "systemic",
+        "requiredFields": ["geographicRiskBand", "paymentRail"],
+        "legalBasis": {
+          "instrument": "FCA_SCA_TS_2026",
+          "provision": "Risk-based calibration of SCA thresholds",
+          "permitted": true,
+          "condition": null
+        },
+        "minimumTier": 3
+      },
+      "regulatory_reporting": {
+        "actionCategory": "systemic",
+        "requiredFields": ["fraudTypologyCode", "transactionAmountBand"],
+        "legalBasis": {
+          "instrument": "PSR_SD20_2024 + NCA_SAR_REGIME",
+          "provision": "PSR publishes fraud enabler data annually. FCA SUP 15 mandatory reporting.",
+          "permitted": true,
+          "condition": null
+        },
+        "minimumTier": 3
+      }
+    },
+    "UNAUTHORISED_TRANSACTION": {
+      "dispute_and_refund": {
+        "actionCategory": "case_level",
+        "requiredFields": ["accountNumber", "transactionAmountBand"],
+        "legalBasis": {
+          "instrument": "PSR_2017",
+          "provision": "PSP liability for unauthorised payment transactions under PSR 2017 Regulation 75",
+          "permitted": true,
+          "condition": null
+        },
+        "minimumTier": 2
+      },
+      "file_SAR": {
+        "actionCategory": "case_level",
+        "requiredFields": ["accountNumber", "transactionAmountBand"],
+        "legalBasis": {
+          "instrument": "POCA_2002_S330",
+          "provision": "Mandatory SAR on suspicion — no threshold",
+          "permitted": true,
+          "condition": null
+        },
+        "minimumTier": 2
+      },
+      "typology_alert": {
+        "actionCategory": "systemic",
+        "requiredFields": ["fraudTypologyCode", "paymentRail"],
+        "legalBasis": {
+          "instrument": "ECCTA_2023_S188_189",
+          "permitted": true,
+          "condition": null
+        },
+        "minimumTier": 3
+      }
+    }
+  },
+  "conflictTypeDefinitions": {
+    "FIELD_CLASSIFICATION": "Field is a direct or indirect identifier under UK GDPR — must be suppressed or tokenised",
+    "TIPPING_OFF": "Narrative or metadata contains SAR/investigation reference prohibited under POCA s.333A",
+    "K_ANONYMITY_FAILURE": "Surviving categorical fields do not meet k-threshold — tier escalation required",
+    "TRANSFER_INSTRUMENT_GAP": "No confirmed legal transfer mechanism for this tier between source and target jurisdictions",
+    "LEGAL_BASIS_ABSENT": "Target jurisdiction lacks legal authority to act on this signal type via foreign-origin intelligence",
+    "WARNING_CONDITION_NOT_MET": "ECCTA s.189 warning condition not confirmed — indirect sharing not permitted",
+    "RETENTION_CONFLICT": "Source and target retention periods incompatible"
+  },
+  "defaultTier": 2,
+  "tierSelectionLogic": "Resolve to highest-fidelity tier that both source and target jurisdictions legally accept. UK defaults to Tier 2 for cross-border sharing where ECCTA warning condition is met and transfer mechanism is confirmed."
+}

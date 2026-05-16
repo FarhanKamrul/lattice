@@ -1,0 +1,306 @@
+{
+  "schemaVersion": "1.0-MVP",
+  "jurisdictionCode": "BR",
+  "jurisdictionName": "Federative Republic of Brazil",
+  "fiuAuthority": {
+    "name": "COAF (Conselho de Controle de Atividades Financeiras)",
+    "administrativeParent": "Banco Central do Brasil (BCB)",
+    "reportingPortal": "https://www.coaf.fazenda.gov.br/siscoaf",
+    "reportType": "STR (Suspicious Transaction Report / RIF)",
+    "reportingWindow": {
+      "value": 24,
+      "unit": "hours",
+      "triggerEvent": "identification_of_suspicious_activity",
+      "source": "Brazilian AML Law No. 9613/1998 as amended"
+    },
+    "cashThreshold": {
+      "amount": 100000,
+      "currency": "BRL",
+      "context": "transactions_with_non_Brazilian_accounts"
+    },
+    "riFSharingRestriction": {
+      "stfPreliminaryInjunction": "2026-03-27",
+      "requirements": [
+        "Prior formal investigation must exist before RIF shared externally",
+        "Clearly defined objectives required",
+        "Generic requests expressly prohibited",
+        "Judicial or parliamentary oversight required"
+      ],
+      "source": "STF Preliminary Injunction, March 27, 2026"
+    }
+  },
+  "governingInstruments": [
+    {
+      "id": "BR-AML-LAW-9613-1998",
+      "name": "Brazilian AML Law No. 9,613/1998 (as amended)",
+      "type": "primary_legislation",
+      "platformImplications": [
+        "Mandatory AML programs for all regulated entities",
+        "Suspicious activity must be reported to COAF within 24 hours",
+        "STR/RIF existence is confidential",
+        "Tipping-off equivalent prohibition applies"
+      ]
+    },
+    {
+      "id": "BR-BCB-PROT-COAF",
+      "name": "BCB Resolution establishing COAF reporting obligations (various, as amended to 2025)",
+      "type": "regulatory_resolution",
+      "platformImplications": [
+        "Financial institutions report to COAF via SISCOAF",
+        "Risk-based approach to suspicious transaction identification",
+        "Threshold and non-threshold reporting both required"
+      ]
+    },
+    {
+      "id": "BR-BCB-RES-506-2025",
+      "name": "BCB Resolution No. 506/2025 (Pix Cybersecurity and Fraud Notifications)",
+      "inForce": "2025-09-30",
+      "type": "regulatory_resolution",
+      "platformImplications": [
+        "Fraud notifications mandatory: CPF/CNPJ must be flagged when linked to fraudulent Pix transactions",
+        "Participants must reject Pix key registrations for users associated with fraud notifications",
+        "All Pix transactions involving flagged users must be blocked (except refunds)",
+        "Fraud notification system creates a domestic signal-sharing mechanism via DICT",
+        "Platform may receive and process DICT fraud notification indicators"
+      ]
+    },
+    {
+      "id": "BR-BCB-RES-493-2025",
+      "name": "BCB Resolution No. 493/2025 (Pix MED Enhancement)",
+      "inForce": "2025-08-28",
+      "mandatoryAdoption": "2026-02-02",
+      "type": "regulatory_resolution",
+      "platformImplications": [
+        "Immediate and cascade fund blocking upon fraud notification",
+        "Payer institution has autonomous debit and return authority",
+        "DICT operational manual specifies tracking mechanisms and partial block capabilities",
+        "Platform signals should include MED case reference where applicable"
+      ]
+    },
+    {
+      "id": "BR-BCB-RES-429-2024",
+      "name": "BCB Resolution No. 429/2024 (Pix Participation Restriction)",
+      "inForce": "2025-01-01",
+      "type": "regulatory_resolution",
+      "platformImplications": [
+        "Only BCB-authorised institutions may participate in Pix",
+        "Platform must verify BCB authorisation status of Brazilian participant institutions"
+      ]
+    },
+    {
+      "id": "BR-BCB-NORM-491-2024",
+      "name": "BCB Normative No. 491/2024 (Pix Device Limits)",
+      "type": "regulatory_normative",
+      "platformImplications": [
+        "First-use device signals must include device registration status",
+        "Unregistered device flag: transaction limit R$200 single / R$1,000 daily",
+        "Device risk tier must be propagated in signal metadata"
+      ]
+    },
+    {
+      "id": "BR-BCB-RES-SEPT-2025",
+      "name": "BCB Resolution (September 11, 2025) - Mandatory Fraud Transaction Rejection",
+      "inForce": "2025-10-13",
+      "type": "regulatory_resolution",
+      "platformImplications": [
+        "Institutions must reject transactions to accounts reasonably suspected of fraud",
+        "Must use all available information including public/private databases",
+        "Notification to customer of blocked transactions required",
+        "Targeted at money mule accounts and organised crime group accounts"
+      ]
+    },
+    {
+      "id": "BR-BCB-RES-342-2023",
+      "name": "BCB Resolution No. 342/2023 (Pix Data Incident Notification)",
+      "type": "regulatory_resolution",
+      "platformImplications": [
+        "Pix participants must notify account holders of personal data breaches",
+        "Platform breach notification obligations triggered if DICT data exposed",
+        "72-hour notification window expected (LGPD Art. 48)"
+      ]
+    },
+    {
+      "id": "BR-CMN-5274-BCB-538-2025",
+      "name": "CMN Resolution No. 5,274/2025 and BCB Resolution No. 538/2025 (Additional Cybersecurity Requirements)",
+      "inForce": "2025-12-18",
+      "type": "regulatory_resolution",
+      "platformImplications": [
+        "Strengthened data communication infrastructure security for SFN and SPB",
+        "End-to-end encryption mandatory in transit for all financial data",
+        "Platform must satisfy BCB cybersecurity standards for Brazilian participants"
+      ]
+    },
+    {
+      "id": "BR-LGPD-13709-2018",
+      "name": "Lei Geral de Proteção de Dados (LGPD), Law No. 13,709/2018",
+      "type": "primary_legislation",
+      "lawfulBases": {
+        "amlProcessing": "Article 7(II) - compliance with legal obligation",
+        "fraudPrevention": "Article 7(IX) - legitimate interest (supplementary)"
+      },
+      "platformImplications": [
+        "Data minimisation principle (Art. 6(III)): only fields necessary for fraud typology",
+        "Purpose limitation: signals may only be used for AML/fraud prevention",
+        "International transfers require ANPD SCC, BCR, or adequacy decision",
+        "No anonymised data transfer restriction (Art. 12)"
+      ]
+    },
+    {
+      "id": "BR-ANPD-RES-19-2024",
+      "name": "ANPD Resolution CD/ANPD No. 19/2024 (International Data Transfer Rules)",
+      "inForce": "2024-08-23",
+      "sccsMandatoryFrom": "2025-08-23",
+      "type": "regulatory_resolution",
+      "platformImplications": [
+        "ANPD-approved SCCs must be in place before any personal data leaves Brazil",
+        "No adequacy decisions issued as of May 2026",
+        "BCRs permitted for intra-group transfers",
+        "Specific contractual clauses permitted on case-by-case ANPD approval",
+        "Platform operating as data processor must execute ANPD SCCs with Brazilian FI participants"
+      ]
+    },
+    {
+      "id": "BR-STF-RIF-INJUNCTION-2026",
+      "name": "STF Preliminary Injunction on COAF RIF Sharing (March 27, 2026)",
+      "type": "judicial_order",
+      "platformImplications": [
+        "COAF financial intelligence reports cannot be generically requested or shared",
+        "Prior formal investigation required",
+        "Judicial or parliamentary oversight required for RIF disclosure",
+        "Platform must not serve as mechanism for circumventing STF restrictions",
+        "Signals derived from COAF data must be separately reviewed for STF compliance"
+      ]
+    }
+  ],
+  "signalRules": {
+    "tippingOffFilter": {
+      "enabled": true,
+      "prohibitedTerms": ["RIF", "STR filed", "COAF report", "COAF investigation", "formal investigation ongoing"],
+      "requiredLanguage": "unusual_activity_neutral",
+      "legalBasis": "AML Law No. 9613/1998 / STF March 2026 injunction"
+    },
+    "pixFraudNotification": {
+      "enabled": true,
+      "dictIntegration": true,
+      "fraudNotificationFields": [
+        "cpfCnpjHashedHMAC",
+        "pixKeyTypeCategory",
+        "fraudTypologyCode",
+        "notificationTimestamp",
+        "institutionCode"
+      ],
+      "blockingTrigger": "immediate_upon_notification",
+      "cascadeBlocking": true,
+      "legalBasis": "BCB Resolution No. 506/2025"
+    },
+    "medCaseReference": {
+      "includable": true,
+      "format": "BCB_MED_CASE_REFERENCE_ID",
+      "legalBasis": "BCB Resolution No. 493/2025"
+    },
+    "deviceRiskFlag": {
+      "fields": [
+        { "name": "deviceRegistrationStatus", "values": ["REGISTERED", "UNREGISTERED", "FIRST_USE"] },
+        { "name": "deviceTransactionLimitApplied", "type": "boolean" }
+      ],
+      "legalBasis": "BCB Normative No. 491/2024"
+    },
+    "permittedSignalTypes": [
+      "APP_FRAUD",
+      "UNAUTHORISED_TRANSACTION",
+      "ACCOUNT_TAKEOVER",
+      "MULE_ACCOUNT_INDICATOR",
+      "DEVICE_ANOMALY",
+      "TYPOLOGY_ALERT",
+      "PIX_FRAUD_NOTIFICATION",
+      "DICT_FRAUD_MARK"
+    ],
+    "sharingGate": {
+      "lgpdLawfulBasisConfirmed": "ARTICLE_7_II",
+      "coafConfidentialityPreserved": true,
+      "stfRifRestrictionCompliant": true,
+      "anpdSccOrBcrInPlace": true,
+      "bcbAuthorisationVerified": true
+    }
+  },
+  "dataProtection": {
+    "framework": "LGPD Law No. 13,709/2018 / ANPD Resolution 19/2024 / BCB Cybersecurity Resolutions",
+    "lawfulBasis": "ARTICLE_7_II_LEGAL_OBLIGATION",
+    "identifierClassification": {
+      "directIdentifiers": {
+        "fields": ["fullName", "cpf", "cnpj", "passport", "dateOfBirth"],
+        "treatment": "PROHIBIT_IN_SIGNAL",
+        "lgpdCategory": "DIRECT_PERSONAL_DATA"
+      },
+      "indirectIdentifiers": {
+        "fields": ["accountNumber", "pixKey", "emailAddress", "phoneNumber", "ipAddress", "deviceId"],
+        "treatment": "HMAC_SHA256_SALTED_PSEUDONYMISE",
+        "note": "CPF/CNPJ must be HMAC-hashed before any cross-border transmission; plaintext prohibited"
+      },
+      "behavioural": {
+        "fields": ["transactionAmountBand", "transactionFrequencyCategory", "paymentRail", "geographicRiskBand", "deviceRiskTier"],
+        "treatment": "GENERALISE_OR_BAND"
+      }
+    },
+    "pseudonymisationStandard": {
+      "algorithm": "HMAC-SHA256",
+      "saltType": "per_partnership_shared_secret",
+      "deprecatedAlgorithms": ["MD5", "SHA-1"],
+      "keyRotationPeriod": "12_months_minimum",
+      "saltStorage": "separate_key_management_service",
+      "lgpdBasis": "LGPD Art. 12 anonymisation threshold not met by unsalted hashing"
+    },
+    "dataRetention": {
+      "minimumYears": 5,
+      "trigger": "transaction_date_or_suspicious_activity_identification",
+      "legalBasis": "AML Law No. 9613/1998 / BCB regulations"
+    },
+    "crossBorderTransfer": {
+      "mechanisms": [
+        {
+          "type": "ANPD_SCC",
+          "status": "MANDATORY_FROM_2025_08_23",
+          "authority": "ANPD",
+          "source": "ANPD Resolution CD/ANPD No. 19/2024"
+        },
+        {
+          "type": "BCR",
+          "status": "PERMITTED_FOR_INTRAGROUP",
+          "authority": "ANPD"
+        },
+        {
+          "type": "ADEQUACY_DECISION",
+          "status": "NO_DECISIONS_ISSUED_AS_OF_MAY_2026",
+          "authority": "ANPD"
+        }
+      ],
+      "anonymousDataExempt": true,
+      "lgpdBasis": "LGPD Art. 12"
+    }
+  },
+  "fatfCompliance": {
+    "recommendations": [
+      { "number": 16, "topic": "wire_transfer_information" },
+      { "number": 21, "topic": "tipping_off_and_confidentiality" },
+      { "number": 29, "topic": "fiu_powers" },
+      { "number": 40, "topic": "cross_border_cooperation" }
+    ],
+    "egmontMember": true,
+    "fiuToFiuChannel": "EGMONT_SECURE_WEB",
+    "stfRifSharingRestriction2026": {
+      "formalInvestigationRequired": true,
+      "judicialOversightRequired": true,
+      "genericRequestsProhibited": true
+    }
+  },
+  "lceLcdConstraints": {
+    "sarConfidentialityAbsolute": true,
+    "noPlaintextDirectIdentifiers": true,
+    "tippingOffLanguageFilter": true,
+    "crossBorderGateRequired": true,
+    "minRetentionYears": 5,
+    "anpdSccRequired": true,
+    "dictIntegrationAvailable": true,
+    "stfRifRestrictionCompliant": true
+  }
+}

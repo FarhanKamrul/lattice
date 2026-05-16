@@ -1,0 +1,253 @@
+{
+  "schemaVersion": "1.0-MVP",
+  "jurisdictionCode": "US",
+  "jurisdictionName": "United States of America",
+  "fiuAuthority": {
+    "name": "FinCEN (Financial Crimes Enforcement Network)",
+    "reportingPortal": "https://bsaefiling.fincen.treas.gov",
+    "reportType": "SAR (FinCEN SAR Form 111)",
+    "reportingWindow": {
+      "value": 30,
+      "unit": "calendar_days",
+      "triggerEvent": "initial_detection_of_suspicious_activity",
+      "source": "BSA / 31 CFR § 1020.320"
+    },
+    "ctrThreshold": {
+      "amount": 10000,
+      "currency": "USD",
+      "aggregationWindow": "one_business_day"
+    },
+    "sarThresholds": {
+      "bankThreshold": 5000,
+      "msbThreshold": 2000,
+      "currency": "USD",
+      "condition": "suspect_identified_or_criminal_activity"
+    }
+  },
+  "governingInstruments": [
+    {
+      "id": "US-BSA",
+      "name": "Bank Secrecy Act (BSA), 31 U.S.C. §§ 5311-5336",
+      "amendments": ["Anti-Money Laundering Act of 2020 (AMLA 2020)", "FinCEN Proposed Rule Apr 2026 (pending)"],
+      "type": "primary_legislation",
+      "platformImplications": [
+        "SAR existence is absolutely confidential: 31 U.S.C. § 5318(g)",
+        "No SAR data or SAR-derived signals may be published on platform",
+        "AML programs must include ongoing transaction monitoring",
+        "Signals must avoid language that implies existence of a SAR"
+      ]
+    },
+    {
+      "id": "US-AMLA-2020",
+      "name": "Anti-Money Laundering Act of 2020",
+      "status": "Partially implemented; FinCEN rulemaking ongoing (April 2026 proposed rule)",
+      "type": "primary_legislation",
+      "platformImplications": [
+        "Risk-based prioritisation of AML signals required",
+        "Effectiveness assessment of information sharing programs required",
+        "Innovation provisions: allow FinCEN Innovation Hours for platform piloting"
+      ]
+    },
+    {
+      "id": "US-PATRIOT-314A",
+      "name": "USA PATRIOT Act § 314(a)",
+      "type": "primary_legislation",
+      "platformImplications": [
+        "Mandatory response to FinCEN 314(a) requests",
+        "Platform must support emergency override for 314(a) lookups",
+        "Not relevant to voluntary cross-border platform sharing"
+      ]
+    },
+    {
+      "id": "US-PATRIOT-314B",
+      "name": "USA PATRIOT Act § 314(b)",
+      "regulationCFR": "31 CFR § 1010.540",
+      "type": "primary_legislation",
+      "platformImplications": [
+        "Platform participation requires annual FinCEN 314(b) registration for each US FI",
+        "Information sharing permitted only for AML/CFT purposes",
+        "SAR existence still cannot be shared under 314(b)",
+        "Safe harbour applies to registered institutions sharing for permissible purposes",
+        "Domestic-only: no international 314(b) safe harbour",
+        "Cross-border sharing of 314(b) intelligence requires MLAT or bilateral FIU channel"
+      ],
+      "registrationRequirements": {
+        "annualRenewal": true,
+        "fincenPortal": "https://www.fincen.gov/314b",
+        "designatedContact": "minimum_one_per_institution"
+      },
+      "permittedPurposes": [
+        "identifying_and_reporting_money_laundering",
+        "combating_terrorist_financing",
+        "specified_unlawful_activities"
+      ],
+      "prohibitedSharing": [
+        "SAR_content",
+        "SAR_existence",
+        "SAR_implied_by_signal_language"
+      ]
+    },
+    {
+      "id": "US-EFTA-REGE",
+      "name": "Electronic Fund Transfer Act (EFTA) and Regulation E (12 CFR Part 1005)",
+      "type": "primary_legislation",
+      "platformImplications": [
+        "Unauthorised EFT signals: flag Reg E coverage (consumer accounts, debit, ACH, P2P)",
+        "Signal must include T+2_day and T+60_day liability cutoff dates",
+        "APP/authorised fraud not covered by Reg E: no mandatory reimbursement obligation",
+        "Wire transfers and credit cards not covered"
+      ],
+      "liabilityTiers": [
+        { "reportedWithin": "2_business_days", "maxConsumerLiability": 50, "currency": "USD" },
+        { "reportedWithin": "60_days", "maxConsumerLiability": 500, "currency": "USD" },
+        { "reportedAfter": "60_days", "maxConsumerLiability": "UNLIMITED" }
+      ],
+      "institutionInvestigationDeadline": "10_business_days"
+    },
+    {
+      "id": "US-GLBA",
+      "name": "Gramm-Leach-Bliley Act (GLBA) / FTC Safeguards Rule 16 CFR Part 314 (updated 2023)",
+      "type": "primary_legislation",
+      "platformImplications": [
+        "NPI may only be shared with service providers under contract",
+        "No federal cross-border transfer restriction for NPI",
+        "State law (CCPA, CT, MT) may impose additional obligations",
+        "Contractual safeguards required with platform as data processor"
+      ]
+    },
+    {
+      "id": "US-CFPB-1033",
+      "name": "CFPB Section 1033 Open Banking Rule (October 2024)",
+      "complianceDates": {
+        "largeInstitutions": "2026-04-01",
+        "mediumInstitutions": "2027-04-01",
+        "smallInstitutions": "2028-04-01"
+      },
+      "type": "federal_rule",
+      "platformImplications": [
+        "Transaction and account data portability obligations may create new signal sources",
+        "Platform must not use 1033 data access for AML purposes without separate authorisation",
+        "Tokenised payment initiation data cannot be used to restrict competition"
+      ]
+    },
+    {
+      "id": "US-NIST-SP800-188",
+      "name": "NIST SP 800-188: De-Identifying Government Datasets (September 2023)",
+      "type": "technical_standard",
+      "platformImplications": [
+        "Federal baseline for de-identification",
+        "Distinguishes direct identifiers from quasi-identifiers",
+        "Recommends HMAC (FIPS 198-1) for pseudonymisation",
+        "K-anonymity and differential privacy recognised",
+        "FF1 FPE (NIST SP 800-38G Rev.1, 2025 draft) recognised; FF3 deprecated"
+      ]
+    }
+  ],
+  "signalRules": {
+    "tippingOffFilter": {
+      "enabled": true,
+      "prohibitedTerms": ["SAR filed", "suspicious activity report", "under BSA investigation", "314(a) match"],
+      "requiredLanguage": "unusual_activity_neutral",
+      "legalBasis": "BSA 31 U.S.C. § 5318(g)"
+    },
+    "appFraudReimbursementCap": {
+      "exists": false,
+      "note": "No mandatory APP/authorised fraud reimbursement regime in the US. Regulation E covers unauthorised transactions only.",
+      "authorisedFraudCoverage": "voluntary_only_no_federal_mandate"
+    },
+    "unauthorisedTransactionLiability": {
+      "framework": "EFTA_REGULATION_E",
+      "coverageScope": ["consumer_debit", "ACH", "P2P_payments", "ATM"],
+      "excludedFromCoverage": ["wire_transfers", "credit_cards", "APP_authorised_fraud"],
+      "institutionInvestigationDeadline": "10_business_days",
+      "provisionalCreditRequired": true
+    },
+    "permittedSignalTypes": [
+      "UNAUTHORISED_TRANSACTION",
+      "ACCOUNT_TAKEOVER",
+      "MULE_ACCOUNT_INDICATOR",
+      "DEVICE_ANOMALY",
+      "TYPOLOGY_ALERT",
+      "APP_FRAUD"
+    ],
+    "sharingGate": {
+      "fincen314bRegistrationRequired": true,
+      "annualRenewalRequired": true,
+      "permittedPurposesOnly": true,
+      "sarConfidentialityPreserved": true,
+      "internationalSharingRequiresSeparateMechanism": true
+    }
+  },
+  "dataProtection": {
+    "framework": "GLBA / FTC Safeguards Rule 2023 / NIST SP 800-188 / State law patchwork",
+    "lawfulBasis": "BSA_LEGAL_OBLIGATION_AND_CONTRACTUAL",
+    "identifierClassification": {
+      "directIdentifiers": {
+        "fields": ["fullName", "ssn", "ein", "dateOfBirth", "passportNumber", "driversLicense"],
+        "treatment": "PROHIBIT_IN_SIGNAL",
+        "nistCategory": "DIRECT_IDENTIFIER"
+      },
+      "nonpublicPersonalInformation": {
+        "fields": ["accountNumber", "routingNumber", "emailAddress", "phoneNumber"],
+        "treatment": "HMAC_SHA256_SALTED_PSEUDONYMISE",
+        "nistCategory": "QUASI_IDENTIFIER"
+      },
+      "quasiIdentifiers": {
+        "fields": ["ipAddress", "deviceFingerprint", "dateOfBirthPartial", "zipCode"],
+        "treatment": "HMAC_SHA256_SALTED_OR_GENERALISE",
+        "note": "IP address and device fingerprint are personal data under CCPA; federal treatment is less clear"
+      },
+      "behavioural": {
+        "fields": ["transactionAmountBand", "transactionFrequencyCategory", "paymentRail", "geographicRiskBand"],
+        "treatment": "GENERALISE_OR_BAND"
+      }
+    },
+    "pseudonymisationStandard": {
+      "algorithm": "HMAC-SHA256",
+      "nistReference": "FIPS 198-1",
+      "saltType": "per_partnership_shared_secret",
+      "deprecatedAlgorithms": ["MD5", "SHA-1", "FF3_FPE"],
+      "fpePermitted": "FF1_ONLY_NIST_SP800_38G_REV1_DRAFT_2025",
+      "keyRotationPeriod": "12_months_minimum"
+    },
+    "dataRetention": {
+      "minimumYears": 5,
+      "trigger": "SAR_filing_date_or_transaction_date",
+      "legalBasis": "BSA_31_CFR_1010_430"
+    },
+    "crossBorderTransfer": {
+      "federalMechanism": "NONE",
+      "practicalMechanisms": [
+        { "type": "MLAT", "usedFor": "law_enforcement_FIU_formal_requests" },
+        { "type": "EGMONT_SECURE_WEB", "usedFor": "FIU_to_FIU_informal_intelligence" },
+        { "type": "CONTRACTUAL_SAFEGUARDS", "usedFor": "commercial_platform_data_processor_agreements" },
+        { "type": "BILATERAL_MOU", "usedFor": "regulatory_supervisory_exchange" }
+      ],
+      "anonymousDataExempt": true,
+      "statePrivacyLawOverride": {
+        "california": "CCPA_CPRA_applies_if_California_residents_data",
+        "connecticut": "CTDPA_applies",
+        "montana": "MCDPA_applies"
+      }
+    }
+  },
+  "fatfCompliance": {
+    "recommendations": [
+      { "number": 16, "topic": "wire_transfer_information" },
+      { "number": 21, "topic": "tipping_off_and_confidentiality" },
+      { "number": 29, "topic": "fiu_powers" },
+      { "number": 40, "topic": "cross_border_cooperation" }
+    ],
+    "egmontMember": true,
+    "fiuToFiuChannel": "EGMONT_SECURE_WEB"
+  },
+  "lceLcdConstraints": {
+    "sarConfidentialityAbsolute": true,
+    "noPlaintextDirectIdentifiers": true,
+    "tippingOffLanguageFilter": true,
+    "crossBorderGateRequired": true,
+    "minRetentionYears": 5,
+    "fincen314bRegistrationRequired": true,
+    "noMandatoryAPPReimbursement": true
+  }
+}

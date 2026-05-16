@@ -1,0 +1,293 @@
+{
+  "jurisdictionCode": "US",
+  "jurisdictionName": "United States of America",
+  "systemOwner": "FinCEN / Federal Reserve / OCC / FDIC / CFPB",
+  "version": "1.0",
+  "effectiveDate": "2025-09-05",
+  "lastUpdated": "2026-05-16",
+  "governingInstruments": [
+    {
+      "id": "FINCEN_FIN2025_G001",
+      "shortName": "FinCEN FIN-2025-G001",
+      "fullName": "FinCEN Guidance: Cross-Border Information Sharing by Financial Institutions and SAR Confidentiality",
+      "effectiveDate": "2025-09-05",
+      "scope": "Voluntary cross-border sharing of underlying facts, transactions, documents, and cyber data by US financial institutions",
+      "keyProvision": "BSA generally does not prohibit cross-border information sharing. FIs may share underlying facts/transactions/documents upon which a SAR is based — but NOT the SAR itself or any information revealing SAR existence. Cyber data including IP addresses, geolocations, device identification numbers explicitly included in safe harbor scope. Issued in consultation with OCC, FDIC, NCUA.",
+      "url": "https://www.fincen.gov/system/files/2025-09/Crossborderguidance-508C.pdf"
+    },
+    {
+      "id": "BSA_314B",
+      "shortName": "USA PATRIOT Act s.314(b)",
+      "fullName": "USA PATRIOT Act Section 314(b) — Voluntary Information Sharing Between Financial Institutions",
+      "effectiveDate": "2002-10-26",
+      "scope": "Voluntary sharing between FinCEN-registered financial institutions to detect money laundering, terrorist financing, and specified unlawful activities",
+      "keyProvision": "FIs must register with FinCEN (annual renewal required) before sharing. Information shared only for detecting ML/TF/SUAs. Sharing is entirely voluntary — no obligation to act on received intelligence. Safe harbor from civil liability when sharing in good faith.",
+      "url": "https://www.fincen.gov/resources/section-314b"
+    },
+    {
+      "id": "BSA_31_USC_5318G",
+      "shortName": "BSA 31 U.S.C. § 5318(g)",
+      "fullName": "Bank Secrecy Act Section 5318(g) — Mandatory SAR Filing",
+      "effectiveDate": "1994-01-01",
+      "scope": "Mandatory SAR filing obligation for transactions involving potential ML/TF/fraud",
+      "keyProvision": "FIs must file SAR with FinCEN when they know, suspect, or have reason to suspect transaction involves funds from illegal activity or is designed to evade reporting. $5,000 threshold for bank SARs. SAR confidentiality — cannot disclose SAR existence to subject.",
+      "url": "https://www.law.cornell.edu/uscode/text/31/5318"
+    },
+    {
+      "id": "REG_E_EFTA",
+      "shortName": "Regulation E / EFTA",
+      "fullName": "Electronic Fund Transfer Act (15 U.S.C. § 1693) and Regulation E (12 CFR Part 1005) — Unauthorised Transaction Protections",
+      "effectiveDate": "1979-02-08",
+      "scope": "Consumer liability limits and error resolution obligations for unauthorised electronic fund transfers",
+      "keyProvision": "Consumer liability capped at $50 (reported within 2 days), $500 (2-60 days), unlimited (after 60 days). FI must investigate and provide provisional credit within 10 business days. Unauthorised EFT induced by fraud (impersonation scam) qualifies as error requiring investigation. Consumer negligence cannot be used to increase liability beyond Reg E limits.",
+      "url": "https://www.consumerfinance.gov/rules-policy/regulations/1005/6"
+    },
+    {
+      "id": "GLBA_PRIVACY",
+      "shortName": "GLBA / Reg P",
+      "fullName": "Gramm-Leach-Bliley Act (15 U.S.C. § 6801) and Regulation P — Financial Privacy",
+      "effectiveDate": "2001-07-01",
+      "scope": "Protection of nonpublic personal information (NPI) held by financial institutions",
+      "keyProvision": "FIs must protect NPI. Hashed/pseudonymised NPI remains covered as NPI — pseudonymisation does not remove GLBA obligations. Cross-border sharing of NPI requires contractual controls.",
+      "url": "https://www.law.cornell.edu/uscode/text/15/6801"
+    },
+    {
+      "id": "FFIEC_BSA_AML_MANUAL",
+      "shortName": "FFIEC BSA/AML Examination Manual 2024",
+      "fullName": "Federal Financial Institutions Examination Council BSA/AML Examination Manual (2024 update)",
+      "effectiveDate": "2024-01-01",
+      "scope": "Supervisory expectations for BSA/AML compliance including fraud signal handling",
+      "keyProvision": "FIs expected to use intelligence signals to inform SAR filing decisions. Step-up authentication permitted as fraud mitigation tool. No mandatory APP reimbursement regime — US has no equivalent to UK PSR SD20.",
+      "url": "https://bsaaml.ffiec.gov/manual"
+    },
+    {
+      "id": "CCPA_CPRA",
+      "shortName": "CCPA/CPRA",
+      "fullName": "California Consumer Privacy Act / California Privacy Rights Act",
+      "effectiveDate": "2023-01-01",
+      "scope": "Privacy rights for California consumers — applies to data controllers processing California residents' data",
+      "keyProvision": "Applies to companies with revenue >$25M or processing >100,000 consumers' data. Fraud prevention is a legitimate processing basis. Cross-border transfers to non-adequate countries require contractual safeguards. GLBA-covered data is exempt.",
+      "url": "https://oag.ca.gov/privacy/ccpa"
+    }
+  ],
+  "criticalLegalGap": {
+    "description": "The US has NO mandatory APP fraud reimbursement regime equivalent to UK PSR SD20 or Brazilian MED. For APP fraud (authorised push payment), a US bank has no statutory obligation to reimburse the victim or block the receiving account based on a foreign intelligence signal alone. The FI must independently determine there is suspicion before taking action. This makes APP_FRAUD case-level actions effectively advisory-only for foreign-origin signals in the US context.",
+    "affectedActions": ["block_account", "freeze_account", "reimburse_victim"],
+    "additionalNote": "FinCEN FIN-2025-G001 (September 2025) explicitly authorises voluntary sharing of cyber data (IP, device, geolocation) cross-border under BSA safe harbor for the first time — but does not create any obligation to act on received signals.",
+    "instruments": ["FINCEN_FIN2025_G001", "BSA_314B", "REG_E_EFTA"]
+  },
+  "fieldSurvivalRules": {
+    "tier1": {
+      "identifierFields": ["accountNumber", "routingNumber", "ipAddress", "deviceFingerprint", "phoneNumber", "ssn_last4"],
+      "bandsAndCategories": ["transactionAmountBand", "paymentRail", "fraudTypologyCode", "geographicRiskBand", "deviceRiskTier"],
+      "timestamps": ["transactionUTC", "detectionUTC"],
+      "narrative": "filtered"
+    },
+    "tier2": {
+      "identifierFields": ["accountNumber", "routingNumber", "ipAddress", "deviceFingerprint", "phoneNumber"],
+      "bandsAndCategories": ["transactionAmountBand", "paymentRail", "fraudTypologyCode", "geographicRiskBand"],
+      "timestamps": ["transactionUTC", "detectionUTC"],
+      "narrative": "first_sentence_only",
+      "note": "identifierFields as random tokens only. ssn_last4 always suppressed regardless of tier."
+    },
+    "tier3": {
+      "identifierFields": [],
+      "bandsAndCategories": ["transactionAmountBand", "paymentRail", "fraudTypologyCode", "geographicRiskBand"],
+      "timestamps": ["transactionUTC"],
+      "narrative": null
+    }
+  },
+  "useMatrix": {
+    "APP_FRAUD": {
+      "block_account": {
+        "actionCategory": "case_level",
+        "requiredFields": ["accountNumber"],
+        "legalBasis": {
+          "instrument": "FFIEC_BSA_AML_MANUAL + BSA_31_USC_5318G",
+          "provision": "FI may take risk-based action including account restriction based on independent suspicion assessment",
+          "permitted": "conditional",
+          "condition": "NO STATUTORY OBLIGATION. US FI has no mandatory freeze authority from foreign-origin APP fraud signal alone. FI must independently form suspicion. Signal is informational only — cannot mandate action.",
+          "foreignOriginPermitted": "advisory_only",
+          "mandatoryAction": false
+        },
+        "minimumTier": 2,
+        "effectiveActionability": "advisory"
+      },
+      "freeze_account": {
+        "actionCategory": "case_level",
+        "requiredFields": ["accountNumber"],
+        "legalBasis": {
+          "instrument": "FFIEC_BSA_AML_MANUAL",
+          "provision": "Risk-based account restriction at FI discretion",
+          "permitted": "conditional",
+          "condition": "No mandatory regime. FI discretion only. No equivalent to UK PSR SD20 or Brazilian MED for APP fraud.",
+          "foreignOriginPermitted": "advisory_only",
+          "mandatoryAction": false
+        },
+        "minimumTier": 2,
+        "effectiveActionability": "advisory"
+      },
+      "reimburse_victim": {
+        "actionCategory": "case_level",
+        "requiredFields": ["accountNumber", "transactionAmountBand"],
+        "legalBasis": {
+          "instrument": "REG_E_EFTA",
+          "provision": "Regulation E covers unauthorised EFTs. APP fraud where consumer was deceived into authorising transfer may qualify as unauthorised EFT under CFPB FAQ guidance.",
+          "permitted": "conditional",
+          "condition": "APP fraud reimbursement under Reg E is fact-specific. Where fraudster induced consumer to initiate transfer (e.g. impersonation), CFPB FAQ confirms this qualifies as unauthorised. However NO mandatory reimbursement regime equivalent to UK PSR SD20 exists. Each case assessed individually.",
+          "foreignOriginPermitted": "advisory_only",
+          "mandatoryAction": false
+        },
+        "minimumTier": 2,
+        "effectiveActionability": "discretionary"
+      },
+      "file_SAR": {
+        "actionCategory": "case_level",
+        "requiredFields": ["accountNumber", "transactionAmountBand"],
+        "legalBasis": {
+          "instrument": "BSA_31_USC_5318G",
+          "provision": "Mandatory SAR filing at $5,000 threshold where FI knows/suspects/has reason to suspect illegal activity",
+          "permitted": true,
+          "condition": "FI must independently form suspicion. Platform signal is a trigger for assessment, not a substitute. SAR existence must not be disclosed to subject or counterparty.",
+          "foreignOriginPermitted": true,
+          "mandatoryAction": "conditional_on_independent_suspicion"
+        },
+        "minimumTier": 2
+      },
+      "step_up_auth": {
+        "actionCategory": "case_level",
+        "requiredFields": ["deviceFingerprint", "ipAddress"],
+        "legalBasis": {
+          "instrument": "FFIEC_BSA_AML_MANUAL + FINCEN_FIN2025_G001",
+          "provision": "FFIEC guidance permits step-up authentication as fraud mitigation. FIN-2025-G001 explicitly includes device data and IP addresses in cross-border sharing safe harbor.",
+          "permitted": true,
+          "condition": null,
+          "foreignOriginPermitted": true,
+          "note": "FIN-2025-G001 is the first FinCEN guidance to explicitly include device/cyber data in cross-border safe harbor scope"
+        },
+        "minimumTier": 2
+      },
+      "voluntary_share_314b": {
+        "actionCategory": "case_level",
+        "requiredFields": ["accountNumber", "fraudTypologyCode"],
+        "legalBasis": {
+          "instrument": "BSA_314B",
+          "provision": "Registered FIs may voluntarily share information with other registered FIs for ML/TF/SUA detection",
+          "permitted": true,
+          "condition": "Both institutions must be FinCEN-registered under 314(b). Annual renewal required. Cannot share SAR existence — only underlying facts/transactions.",
+          "foreignOriginPermitted": true,
+          "note": "This is the primary legal pathway for US FIs to receive and act on foreign fraud intelligence"
+        },
+        "minimumTier": 2
+      },
+      "act_on_foreign_intelligence": {
+        "actionCategory": "case_level",
+        "requiredFields": ["accountNumber"],
+        "legalBasis": {
+          "instrument": "FINCEN_FIN2025_G001 + BSA_314B",
+          "provision": "BSA does not prohibit cross-border sharing of underlying facts. FI may use received intelligence to inform risk decisions.",
+          "permitted": true,
+          "condition": "Purely voluntary. No obligation to act. FI must independently assess signal and apply own risk framework. GLBA contractual controls required for NPI.",
+          "foreignOriginPermitted": true,
+          "mandatoryAction": false
+        },
+        "minimumTier": 2,
+        "effectiveActionability": "advisory"
+      },
+      "typology_alert": {
+        "actionCategory": "systemic",
+        "requiredFields": ["fraudTypologyCode", "paymentRail"],
+        "legalBasis": {
+          "instrument": "FINCEN_FIN2025_G001",
+          "provision": "Cross-border sharing of fraud typology intelligence explicitly encouraged by FinCEN to help institutions form complete picture of threats",
+          "permitted": true,
+          "condition": null,
+          "foreignOriginPermitted": true
+        },
+        "minimumTier": 3
+      },
+      "update_fraud_model": {
+        "actionCategory": "systemic",
+        "requiredFields": ["fraudTypologyCode", "geographicRiskBand", "paymentRail"],
+        "legalBasis": {
+          "instrument": "FINCEN_FIN2025_G001 + GLBA_PRIVACY",
+          "provision": "Anonymous aggregate data not subject to GLBA NPI protections. FIs encouraged to use intelligence to strengthen fraud programs.",
+          "permitted": true,
+          "condition": null,
+          "foreignOriginPermitted": true
+        },
+        "minimumTier": 3
+      },
+      "regulatory_reporting": {
+        "actionCategory": "systemic",
+        "requiredFields": ["fraudTypologyCode", "transactionAmountBand"],
+        "legalBasis": {
+          "instrument": "BSA_31_USC_5318G + FFIEC_BSA_AML_MANUAL",
+          "provision": "FinCEN uses SAR typology data for annual financial trend reports. Anonymous aggregate signals contribute to sector-wide intelligence.",
+          "permitted": true,
+          "condition": null,
+          "foreignOriginPermitted": true
+        },
+        "minimumTier": 3
+      }
+    },
+    "UNAUTHORISED_TRANSACTION": {
+      "investigate_and_credit": {
+        "actionCategory": "case_level",
+        "requiredFields": ["accountNumber", "transactionAmountBand"],
+        "legalBasis": {
+          "instrument": "REG_E_EFTA",
+          "provision": "MANDATORY. FI must investigate and provide provisional credit within 10 business days of error notice. Applies to unauthorised EFTs including fraud-induced transfers under CFPB FAQ guidance.",
+          "permitted": true,
+          "condition": "Consumer must have filed error notice with FI. Platform signal can trigger FI review but consumer notice is the legal trigger for Reg E obligations.",
+          "foreignOriginPermitted": true,
+          "mandatoryAction": "conditional_on_consumer_notice"
+        },
+        "minimumTier": 2
+      },
+      "file_SAR": {
+        "actionCategory": "case_level",
+        "requiredFields": ["accountNumber", "transactionAmountBand"],
+        "legalBasis": {
+          "instrument": "BSA_31_USC_5318G",
+          "provision": "Mandatory at $5,000 threshold on independent suspicion",
+          "permitted": true,
+          "condition": "Independent assessment required",
+          "foreignOriginPermitted": true
+        },
+        "minimumTier": 2
+      },
+      "step_up_auth": {
+        "actionCategory": "case_level",
+        "requiredFields": ["deviceFingerprint", "ipAddress"],
+        "legalBasis": {
+          "instrument": "FFIEC_BSA_AML_MANUAL + FINCEN_FIN2025_G001",
+          "permitted": true,
+          "foreignOriginPermitted": true
+        },
+        "minimumTier": 2
+      },
+      "typology_alert": {
+        "actionCategory": "systemic",
+        "requiredFields": ["fraudTypologyCode", "paymentRail"],
+        "legalBasis": {
+          "instrument": "FINCEN_FIN2025_G001",
+          "permitted": true,
+          "foreignOriginPermitted": true
+        },
+        "minimumTier": 3
+      }
+    }
+  },
+  "conflictTypeDefinitions": {
+    "FIELD_CLASSIFICATION": "Field is NPI under GLBA or personal data under CCPA/CPRA — contractual controls required for cross-border sharing",
+    "TIPPING_OFF": "SAR existence or narrative cannot be disclosed — BSA 31 U.S.C. § 5318(g)(2) confidentiality obligation",
+    "K_ANONYMITY_FAILURE": "Combination of surviving fields enables re-identification — GLBA and CCPA/CPRA risk",
+    "TRANSFER_INSTRUMENT_GAP": "Cross-border NPI transfer requires contractual controls — no comprehensive US federal data transfer framework",
+    "NO_MANDATORY_ACTION": "US has no mandatory APP reimbursement or account freeze regime — all case-level actions are advisory/discretionary for foreign-origin signals",
+    "SAR_CONFIDENTIALITY": "FI cannot disclose SAR existence or content even to foreign FIU — must share only underlying facts",
+    "VOLUNTARY_ONLY": "BSA 314(b) sharing is entirely voluntary — no receiving institution is obligated to act on platform signals"
+  },
+  "defaultTier": 2,
+  "tierSelectionLogic": "Default Tier 2. Note: US case-level actions are advisory-only for foreign-origin APP fraud signals — no mandatory action regime exists. Systemic actions (Tier 3) are well-supported under FIN-2025-G001. Device/cyber data signals explicitly encouraged for cross-border sharing under FIN-2025-G001 safe harbor."
+}
