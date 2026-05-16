@@ -7,6 +7,10 @@ import {
 } from './ui';
 import { generateSignal, generateReport, formatAge } from '../utils/mock';
 import type { Signal, ConflictType } from '../utils/mock';
+import PolicyBriefBot from './PolicyBriefBot';
+import RegulationAdvisoryPanel from './RegulationAdvisoryPanel';
+
+const MAX_SIGNALS = 200;
 
 // ─── KPI Rail ───────────────────────────────────────────────────────────────
 function KpiCard({ label, value, sub, flag }: { label: string; value: string | number; sub?: string; flag?: boolean }) {
@@ -153,6 +157,9 @@ function VerdictPanel({ signal, onClose }: { signal: Signal; onClose: () => void
             </div>
           </div>
         )}
+
+        {/* AI Policy Brief Bot */}
+        <PolicyBriefBot signal={signal} />
       </div>
     </div>
   );
@@ -270,10 +277,14 @@ export default function Dashboard() {
 
   const report = generateReport(signals);
 
-  // Live feed: new signal every 4s
+  // Live feed: new signal every 4s — capped at MAX_SIGNALS for demo
   useEffect(() => {
     const id = setInterval(() => {
-      setSignals(prev => [{ ...generateSignal(), age: 0 }, ...prev.slice(0, 199)]);
+      setSignals(prev =>
+        prev.length >= MAX_SIGNALS
+          ? prev  // stop generating once cap hit
+          : [{ ...generateSignal(), age: 0 }, ...prev]
+      );
     }, 4000);
     return () => clearInterval(id);
   }, []);
@@ -385,6 +396,19 @@ export default function Dashboard() {
 
       {/* BOTTOM STRIP */}
       <BottomStrip report={report} onConflictFilter={setConflictFilter} />
+
+      {/* REGULATORY ADVISORY PANEL */}
+      <RegulationAdvisoryPanel
+        frictionTop5={report.frictionTop5}
+        total={report.totalSignals || 1}
+      />
+
+      {/* Demo cap notice */}
+      {signals.length >= MAX_SIGNALS && (
+        <div className="text-center text-[10px] text-white/20 font-mono py-1">
+          Demo cap reached ({MAX_SIGNALS} signals). Feed paused.
+        </div>
+      )}
 
       <style>{`
         @keyframes slideIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
